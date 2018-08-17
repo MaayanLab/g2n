@@ -1,0 +1,421 @@
+body {
+	font-family: arial, sans-serif;
+	font-size: 13px;
+/* 	width: 1000px;
+	height: 600px; */
+}
+
+#content {
+	width: 50%;
+  	margin: 0 auto;	
+}
+
+#x2k_title {
+	text-align: center;
+	color: #0c89e2;
+	margin-top: 5px;
+	font-size: 16px;
+	letter-spacing: -0.2px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+a:link, a:visited {
+	color: #0098ff;
+}
+
+#footer > p{
+	margin-bottom: 10px;	
+}
+
+#citations{
+	font-size: 12px;
+	margin: auto;
+}
+
+a:hover {
+	color: #026196;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Lato', sans-serif;
+}
+
+button {
+ 	background-color: #eee;
+	border: 1px solid #ddd;
+	border-radius: 2px;
+	cursor: pointer;
+}
+
+input[type="file"] {
+	cursor: pointer;
+}
+
+.list-unstyled {
+	list-style: none;
+	padding-left: 0;
+}
+
+#page {
+	margin: 20px auto;
+	padding: 20px;
+	width: 100%;
+	height: 100%;
+}
+
+#logo {
+  display: table;
+  margin: 0 auto;
+}
+
+#logo a {
+	display: inline-block;
+	margin-left: 100px;
+}
+
+#logo a img {
+	width: 200px;
+	cursor: pointer;
+}
+
+ul#menu {
+	display: table;
+	width: 100%;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+ul#menu li {
+	color: white;
+	float: left;
+}
+
+ul#menu li a {
+	color: black;
+	display: inline-block;
+	font-size: 17px;
+	padding: 10px 10px;
+	text-align: center;
+	text-decoration: none;
+	transition: 0.3s;
+}
+
+/* ul#menu li a.setting {
+	background-color: #0098ff;
+} */
+
+ul#menu li a.setting.active, ul#menu li a.setting:hover {
+	background-color: #2baaff;
+}
+
+/* ul#menu li a.information {
+	background-color: #666;
+} */
+
+ul#menu li a.information.active, ul#menu li a.information:hover {
+	background-color: #2baaff;
+}
+
+.tab-content {
+	clear: both;
+	border: 1px solid #eee;
+	display: none;
+	font-size: 14px;
+	padding: 20px;
+	margin: 10px 0;
+}
+
+.section {
+	margin-bottom: 20px;
+}
+
+#input-fields .section-label, #run-buttons .section-label {
+/* 	border-bottom: 1px solid #0098ff; */
+	color: #0098ff;
+	font-family: 'Lato', sans-serif;
+	font-size: 15px;
+	font-weight: 200;
+	margin: 10px 0;
+}
+
+#input-fields {
+	display: inline-block;
+	width: 100%;
+}
+
+#input-fields #example-gene-list {
+	margin-top: 10px;
+	width: auto;
+}
+
+#input-fields #text-input {
+	float: left;
+	width: 100%;
+	margin-right: 5px;
+}
+
+#input-fields textarea {
+	resize: none;
+	width: 99%;
+}
+
+#run-buttons button {
+	margin: 10px 0 0 10px;
+	width: auto;
+	background-color: #2baaff;
+	color: white;
+	border: 2px solid #4cb7ff;
+}
+
+#footer {
+	clear: both;
+	width: 50%;
+  	margin: 0 auto;
+	margin-top: 20px;
+}
+
+#footer h3 {
+	margin: 10px 0 5px 0;
+}
+
+#download_buttons {
+	float: left;
+	padding: 5px;
+	top: 0;
+}
+
+#graph {
+	border: 1px solid #46494c;
+	clear: both;
+	height: 700px;
+	width: 700px;
+}
+ul.no_bullet {
+	list-style-type: none;
+	margin: 0;
+	padding: 10px 10px;
+}
+
+li.legend {
+	margin: 0 0 12px 0;
+}
+
+#social_buttons {
+	float: right;
+}
+
+
+.clear {
+	clear: both;
+}
+
+.back_button {
+	-webkit-transition-duration: 0.4s;
+	background-color: #4CAF50;
+	border: none;
+	color: white;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 12px;
+	margin: 4px 2px;
+	padding: 10px 10px;
+	text-align: center;
+	text-decoration: none;
+	transition-duration: 0.4s;
+}
+
+.back_button:hover {
+	background-color: #0098ff;
+	color: white;
+}
+
+.stats {
+	float: left;
+	padding: 10px;
+	width: 330px;
+}
+
+#pagetop_spacer {
+	float: left;
+	height: 100px;
+	width: 200px;
+}
+
+.top_bar_text {
+	margin-bottom: 5px;
+}
+
+#settings_text {
+	float: left;
+	left: 120px;
+	position: relative;
+}
+
+/*File input hidden button*/
+.inputfile {
+  /* visibility: hidden etc. wont work */
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+.inputfile:focus + label {
+  /* keyboard navigation */
+  outline: 1px dotted #000;
+  outline: -webkit-focus-ring-color auto 5px;
+}
+.inputfile + label * {
+  pointer-events: none;
+}
+
+#download-label{
+	background-color: #eee;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    display: block;
+    padding-top: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 3px;
+    margin-top: 10px;
+    margin-left: 10px;
+    font-size: 11px;
+	width: 93px;
+    height: 13px;
+}
+
+/* accordion */
+button.accordion {
+    background-color: #fff;
+    display:block;
+    cursor: pointer;
+    /* width: 100%; */
+    text-align: left;
+    border: 0px;
+    outline: none;
+    transition: 0.4s;
+    border-bottom: 1px dashed #aaa;
+}
+
+button.accordion.active {
+    background-color: #fff;
+    
+}
+
+/* ??? */
+button.accordion:hover
+{
+	text-decoration: underline; 
+}
+
+div.panel {
+    padding: 0 18px;
+    background-color: #fff;
+    display: none;
+}
+
+div.panel.show {
+    display: block;
+}
+
+/* ??? */
+#x2k-settings{
+	border: 1px black;
+}
+
+#chea-settings{
+	border: 1px black;
+}
+
+#g2n-settings{
+	border: 1px black;
+}
+
+#kea-settings{
+	border: 1px black;
+}
+
+#acc_settings:after {
+    content: 'Advanced settings	+';
+    font-size: 13px;
+    float: right;
+    margin-left: 5px;
+}
+
+#acc_settings.active:after {
+    content: "Advanced settings	-";
+}
+
+#acc_x2k:after {
+    content: 'X2K	+';
+    font-size: 13px;
+    float: right;
+    margin-left: 5px;
+}
+
+#acc_x2k.active:after {
+    content: "X2K	-";
+}
+
+#acc_chea:after {
+    content: 'ChEA	+';
+    font-size: 13px;
+    float: right;
+    margin-left: 5px;
+}
+
+#acc_chea.active:after {
+    content: "ChEA	-";
+}
+
+#acc_g2n:after {
+    content: 'G2N	+';
+    font-size: 13px;
+    float: right;
+    margin-left: 5px;
+}
+
+#acc_g2n.active:after {
+    content: "G2N	-";
+}
+
+#acc_kea:after {
+    content: 'KEA	+';
+    font-size: 13px;
+    float: right;
+    margin-left: 5px;
+}
+
+#acc_kea.active:after {
+    content: "KEA	-";
+}
+/* accordion */
+
+#info_text {
+	float: left;
+	left: 380px;
+	position: relative;
+}
+
+button.download_button {
+	width: 180px;
+}
+
+#loading_wheel {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+ol li {
+	margin: 10px 0;
+}
+
+#statistics h3 {
+	background-color: #eee;
+	color: black;
+	padding: 10px;
+	margin-top: 0;
+}
