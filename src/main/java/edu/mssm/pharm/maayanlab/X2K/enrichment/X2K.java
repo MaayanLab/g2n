@@ -128,7 +128,16 @@ public class X2K implements SettingsChanger {
     public void run(ArrayList<String> inputList) {
         try {
             if (FileUtils.validateList(inputList))
-                runAll(inputList);
+                try {
+                    setProgress(0, "Finding transcription factors...");
+                    runChea(inputList);
+
+                    setProgress(50, "Finding network...");
+                    runG2N();
+                } catch (InterruptedException e) {
+                    log.info(e.getMessage());
+                    return;
+                }
         } catch (ParseException e) {
             if (e.getErrorOffset() == -1)
                 log.severe("Invalid input: " + "Input list is empty.");
@@ -143,23 +152,6 @@ public class X2K implements SettingsChanger {
         run(inputList);
     }
 
-    public void runAll(Collection<String> genelist) {
-        try {
-            setProgress(0, "Finding transcription factors...");
-            runChea(genelist);
-
-            setProgress(30, "Finding network...");
-            runG2N();
-
-            setProgress(60, "Finding kinases...");
-            runKea();
-
-            setProgress(90, "Writing outputs...");
-        } catch (InterruptedException e) {
-            log.info(e.getMessage());
-            return;
-        }
-    }
 
     private void runChea(Collection<String> genelist) {
         chea = new ChEA(settings);
@@ -187,80 +179,6 @@ public class X2K implements SettingsChanger {
         );
 
         setSetting(X2K.PATH_LENGTH, Integer.toString(path_length - 1));
-    }
-
-    private void runKea() {
-        kea = new KEA(settings);
-        kea.run(getProteinNetwork());
-        topRankedKinases = kea.getTopRankedList(settings.getInt(NUMBER_OF_TOP_KINASES));
-    }
-
-    public Network constructNetworkObject() {
-        Network network = new Network();
-
-        for (TranscriptionFactor tf : chea.getTopRanked(settings.getInt(NUMBER_OF_TOP_TFS))) {
-            network.addNode(Network.nodeTypes.transcriptionFactor, tf, tf.getSimpleName());
-        }
-
-        for (Kinase kinase : kea.getTopRanked(settings.getInt(NUMBER_OF_TOP_KINASES)))
-            network.addNode(Network.nodeTypes.kinase, kinase, kinase.getName().split("-")[0]);
-
-        HashSet<NetworkNode> networkSet = g2n.getNetworkSet();
-        for (NetworkNode node : networkSet) {
-            network.addNode(Network.nodeTypes.networkNode, node, node.getName().split("-")[0]);
-        }
-
-        for (Kinase kinase : kea.getTopRanked(settings.getInt(NUMBER_OF_TOP_KINASES))) {
-            Set<String> substrates = kinase.getEnrichedSubstrates();
-            for (String substrate : substrates)
-                network.addInteraction(kinase.getName().split("-")[0], substrate.split("-")[0]);
-        }
-
-        for (NetworkNode node : networkSet) {
-            HashSet<NetworkNode> neighbors = node.getNeighbors();
-            for (NetworkNode neighbor : neighbors)
-                if (network.contains(neighbor.getName()))
-                    network.addInteraction(node.getName().split("-")[0], neighbor.getName().split("-")[0]);
-        }
-
-        return network;
-    }
-
-    public Network webNetwork() {
-        Network network = new Network();
-        ArrayList<String> tfSimpleNames = new ArrayList<String>();
-
-        for (TranscriptionFactor tf : chea.getTopRanked(settings.getInt(NUMBER_OF_TOP_TFS))) {
-            network.addNode(Network.nodeTypes.transcriptionFactor, tf, tf.getSimpleName());
-            tfSimpleNames.add(tf.getSimpleName());
-        }
-        for (Kinase kinase : kea.getTopRanked(settings.getInt(NUMBER_OF_TOP_KINASES)))
-            network.addNode(Network.nodeTypes.kinase, kinase, kinase.getName().split("-")[0]);
-        HashSet<NetworkNode> networkSet = g2n.getNetworkSet();
-        for (NetworkNode node : networkSet) {
-            if (node.getName() != null) {
-                if (!tfSimpleNames.contains(node.getName())) {
-                    network.addNode(Network.nodeTypes.networkNode, node, node.getName().split("-")[0]);
-                }
-            }
-        }
-        for (Kinase kinase : kea.getTopRanked(settings.getInt(NUMBER_OF_TOP_KINASES))) {
-            Set<String> substrates = kinase.getEnrichedSubstrates();
-            for (String substrate : substrates) {
-                network.addInteraction(kinase.getName().split("-")[0], substrate.split("-")[0]);
-            }
-        }
-        for (NetworkNode node : networkSet) {
-            HashSet<NetworkNode> neighbors = node.getNeighbors();
-            for (NetworkNode neighbor : neighbors) {
-                if ((neighbor.getName() != null) && (node.getName() != null)) {
-                    if (network.contains(neighbor.getName())) {
-                        network.addInteraction(node.getName().split("-")[0], neighbor.getName().split("-")[0]);
-                    }
-                }
-            }
-        }
-        return network;
     }
 
     public Network webNetworkFiltered() {
@@ -317,47 +235,6 @@ public class X2K implements SettingsChanger {
             for (NetworkNode neighbor : neighbors)
                 if (network.contains(neighbor.getName()))
                     nmw.addInteraction(node.getName(), neighbor.getName());
-        }
-
-        return nmw;
-    }
-
-    public NetworkModelWriter constructSparseNetwork() {
-        NetworkModelWriter nmw = new NetworkModelWriter();
-
-        HashSet<String> tfs = new HashSet<String>();
-        HashSet<String> validSubstrates = new HashSet<String>();
-
-        for (String tf : topRankedTFs)
-            tfs.add(tf);
-
-        for (Kinase kinase : kea.getTopRanked(settings.getInt(NUMBER_OF_TOP_KINASES))) {
-            nmw.addNode(kinase.getName(), settings.get(KINASE_NODE_COLOR), Shape.ELLIPSE);
-        }
-
-        for (Kinase kinase : kea.getTopRanked(settings.getInt(NUMBER_OF_TOP_KINASES))) {
-            Set<String> substrates = kinase.getEnrichedSubstrates();
-            for (String substrate : substrates) {
-                if (tfs.contains(substrate))
-                    nmw.addNode(substrate, settings.get(TF_NODE_COLOR), Shape.ELLIPSE);
-                else
-                    nmw.addNode(substrate, settings.get(SUBSTRATE_NODE_COLOR), Shape.ELLIPSE);
-                nmw.addInteraction(kinase.getName(), substrate);
-                validSubstrates.add(substrate);
-            }
-        }
-
-        HashSet<NetworkNode> networkSet = g2n.getNetworkSet();
-        for (NetworkNode node : networkSet) {
-            if (validSubstrates.contains(node.getName())) {
-                HashSet<NetworkNode> neighbors = node.getNeighbors();
-
-                for (NetworkNode neighbor : neighbors)
-                    if (tfs.contains(neighbor.getName())) {
-                        nmw.addNode(neighbor.getName(), settings.get(TF_NODE_COLOR), Shape.ELLIPSE);
-                        nmw.addInteraction(node.getName(), neighbor.getName());
-                    }
-            }
         }
 
         return nmw;
@@ -439,43 +316,5 @@ public class X2K implements SettingsChanger {
 
     public Collection<TranscriptionFactor> getRankedTFs() {
         return chea.getRankedList();
-    }
-
-    public HashSet<String> getProteinNetwork() {
-
-        HashSet<String> proteinSet = new HashSet<String>();
-
-        for (String line : network)
-            proteinSet.add(line);
-
-        for (String line : topRankedTFs)
-            proteinSet.add(line);
-        proteinSet.removeAll(Collections.singleton(null));
-        return proteinSet;
-
-    }
-
-    public HashSet<NetworkNode> getProteinNetworkSet() {
-        return g2n.getNetworkSet();
-    }
-
-    public Collection<String> getTopRankedKinases() {
-        return topRankedKinases;
-    }
-
-    public Collection<Kinase> getRankedKinases() {
-        return kea.getRankedList();
-    }
-
-    public String getChEAOutputName() {
-        return this.cheaOutput;
-    }
-
-    public String getG2NOutputName() {
-        return this.g2nOutput;
-    }
-
-    public String getKEAOutputName() {
-        return this.keaOutput;
     }
 }

@@ -66,80 +66,6 @@ public class ResultsServlet extends HttpServlet {
     private String g2n;
     private String x2k;
 
-    public static Network makeNetwork(Genes2Networks app) {
-        Network network = new Network();
-
-        HashSet<NetworkNode> networkSet = app.getNetworkSet();
-        for (NetworkNode node : networkSet) {
-            String nodeName = node.getName();
-            if (nodeName.length() > 1) {
-                nodeName = nodeName.split("-")[0];
-            }
-            network.addNode(Network.nodeTypes.networkNode, node, nodeName);
-        }
-
-        for (NetworkNode node : networkSet) {
-            HashSet<NetworkNode> neighbors = node.getNeighbors();
-            for (NetworkNode neighbor : neighbors)
-                if (network.contains(neighbor.getName())) {
-                    String nodeName = node.getName();
-                    if (nodeName.length() > 1) {
-                        nodeName = nodeName.split("-")[0];
-                    }
-                    String neighborName = neighbor.getName();
-                    if (neighborName.length() > 1) {
-                        neighborName = neighborName.split("-")[0];
-                    }
-                    network.addInteraction(nodeName, neighborName);
-                }
-        }
-
-        return network;
-    }
-
-    private static String getParam(HttpServletRequest req, String param, String defaultParam) {
-        String result = req.getParameter(param);
-        if (result == null)
-            return defaultParam;
-        return result;
-    }
-
-    // G2N procedures
-
-    public static String runG2N(ArrayList<String> inputList, HttpServletRequest req, HttpServletResponse resp) {
-        // Run enrichment
-        Genes2Networks app = new Genes2Networks();
-        app.setSetting(Genes2Networks.PATH_LENGTH, req.getParameter(Genes2Networks.PATH_LENGTH));
-        app.setSetting(Genes2Networks.MAXIMUM_NUMBER_OF_EDGES, req.getParameter(Genes2Networks.MAXIMUM_NUMBER_OF_EDGES));
-        app.setSetting(Genes2Networks.MAXIMUM_NUMBER_OF_INTERACTIONS, req.getParameter(Genes2Networks.MAXIMUM_NUMBER_OF_INTERACTIONS));
-        app.setSetting(Genes2Networks.MINIMUM_NUMBER_OF_ARTICLES, req.getParameter(Genes2Networks.MINIMUM_NUMBER_OF_ARTICLES));
-        app.setSetting(Genes2Networks.ENABLE_BIOCARTA, getParam(req, Genes2Networks.ENABLE_BIOCARTA, "false"));
-        app.setSetting(Genes2Networks.ENABLE_BIOGRID, getParam(req, Genes2Networks.ENABLE_BIOGRID, "false"));
-        app.setSetting(Genes2Networks.ENABLE_BIOPLEX, getParam(req, Genes2Networks.ENABLE_BIOPLEX, "false"));
-        app.setSetting(Genes2Networks.ENABLE_DIP, getParam(req, Genes2Networks.ENABLE_DIP, "false"));
-        app.setSetting(Genes2Networks.ENABLE_HUMAP, getParam(req, Genes2Networks.ENABLE_HUMAP, "false"));
-        app.setSetting(Genes2Networks.ENABLE_IREF, getParam(req, Genes2Networks.ENABLE_IREF, "false"));
-        app.setSetting(Genes2Networks.ENABLE_INNATEDB, getParam(req, Genes2Networks.ENABLE_INNATEDB, "false"));
-        app.setSetting(Genes2Networks.ENABLE_INTACT, getParam(req, Genes2Networks.ENABLE_INTACT, "false"));
-        app.setSetting(Genes2Networks.ENABLE_KEGG, getParam(req, Genes2Networks.ENABLE_KEGG, "false"));
-        app.setSetting(Genes2Networks.ENABLE_MINT, getParam(req, Genes2Networks.ENABLE_MINT, "false"));
-        app.setSetting(Genes2Networks.ENABLE_PPID, getParam(req, Genes2Networks.ENABLE_PPID, "false"));
-        app.setSetting(Genes2Networks.ENABLE_SNAVI, getParam(req, Genes2Networks.ENABLE_SNAVI, "false"));
-        app.run(inputList);
-        // Write app to session
-        HttpSession httpSession = req.getSession();
-        httpSession.setAttribute("app", app);
-        // Write output
-        JSONify json = Context.getJSONConverter();
-        resp.setContentType("application/json");
-        resp.setCharacterEncoding("UTF-8");
-        json.add("type", "G2N");
-        json.add("network", makeNetwork(app));
-        json.add("input_list", inputList);
-
-        return json.toString();
-    }
-
     private static void readAndSetSettings(HttpServletRequest req, X2K app) {
         Enumeration<String> reqKeys = req.getParameterNames();
         // Save all settings
@@ -190,25 +116,10 @@ public class ResultsServlet extends HttpServlet {
         // Write output
         JSONify json = Context.getJSONConverter();
 
-        JSONify X2K_json = Context.getJSONConverter();
-        X2K_json.add("type", "X2K");
-        X2K_json.add("network", app.webNetwork());
-        X2K_json.add("path_length", app.getSetting(X2K.PATH_LENGTH));
-        // TODO: Fix frontend to eliminate the need of these
-        X2K_json.add("transcriptionFactors", app.getRankedTFs());
-        X2K_json.add("kinases", app.getRankedKinases());
-
-        json.add("X2K", X2K_json.toString());
-
         JSONify ChEA_json = Context.getJSONConverter();
         ChEA_json.add("type", "ChEA");
         ChEA_json.add("tfs", app.getRankedTFs());
         json.add("ChEA", ChEA_json.toString());
-
-        JSONify KEA_json = Context.getJSONConverter();
-        KEA_json.add("type", "KEA");
-        KEA_json.add("kinases", app.getRankedKinases());
-        json.add("KEA", KEA_json.toString());
 
         JSONify G2N_json = Context.getJSONConverter();
         G2N_json.add("type", "G2N");
