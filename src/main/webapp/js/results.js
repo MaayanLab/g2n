@@ -61,150 +61,6 @@ var Base64 = {
 	}
 };
 
-function sendToEnrichr(button) {
-	// Get genes
-	var genes = Object.values($(button).parents('.popover').find('.enriched-gene-link').map(function(index, elem){ return $(elem).text() }));
-
-	// Create Form
-	var $form = $('<form>', {'method': 'post', 'action': 'https://amp.pharm.mssm.edu/Enrichr/enrich', 'target': '_blank', 'enctype': 'multipart/form-data'})
-					.append($('<input>', {'type': 'hidden', 'name': 'list', 'value': genes.join('\n')}))
-					.append($('<input>', {'type': 'hidden', 'name': 'description', 'value': 'Enriched '+$(button).parents('.popover').find('b').first().text()+' targets from X2K'}));
-	
-	// Submit
-	$(button).parents('.popover').append($form);
-	$form.submit();
-	$form.remove();
-}
-
-function createTable(json, container) {
-    var enriched;
-
-    if (container === "#chea-table"){
-        enriched = "enrichedTargets"
-    }
-    else{
-        enriched = "enrichedSubstrates"
-    }
-
-    var dataArray = [];
-    for (var i = 0; i < json.length; i++) {
-
-        // Get first column
-        var splitName = json[i]["name"].split(/[-_]/),
-            firstCol = $('<div>').html($('<a>', {'href': 'http://amp.pharm.mssm.edu/Harmonizome/gene/'+splitName[0], 'target': '_blank'}).html(splitName[0])),
-            metaDiv = $('<div>');
-
-        // Get meta
-        if ("meta" in json[i]) {
-
-            //Parse metadata json
-            var meta = JSON.parse(json[i]["meta"]);
-
-            //Create metadata DIV
-            metaDiv = metaDiv
-                    .append($('<div>', {'class': 'mt-2'}).html('Associations were determined from the following experiment:'))
-                    .append($('<ul>', {'class': 'mb-2'}));
-
-            // Append key-value pairs
-            $.each(meta, function(key, value){
-                metaDiv.find('ul').append($('<li>').html('<b>'+key+'</b>: '+value))
-            })
-        }
-
-
-        // Links to enriched genes
-        var enrichedLinks = [];
-        $.each(json[i][enriched], function(index, gene) {
-            enrichedLinks.push('<a class="enriched-gene-link" href="http://amp.pharm.mssm.edu/Harmonizome/gene/'+gene+'" target="_blank">'+gene+'</a>');
-        });
-
-        // Data Array
-        dataArray[i] = [i+1,
-            firstCol.prop('outerHTML'),
-            json[i]["pvalue"].toPrecision(4),
-            json[i]["zscore"].toFixed(2),
-            json[i]["combinedScore"].toFixed(2),
-            $('<div>', {
-					'class': 'enrichment-popover-button',
-                    'data-toggle': 'popover',
-                    'data-placement': 'left',
-                    'data-html': 'true',
-                    'data-template': '<div class="popover enrichment-popover" role="tooltip"><div class="arrow"></div><h3 class="popover-header"></h3><div class="popover-body"></div></div>',
-					'title': enriched.replace('enriched', 'Overlapping <button class="float-right enrichr-button" onclick="sendToEnrichr(this, event);">En<span class="red">rich</span>r<i class="fas fa-external-link-alt ml-1"></i></button>'),
-                    'data-content': '<b>'+json[i]["name"].split(/[-_]/)[0]+'</b> targets <span class="font-italic">'+json[i][enriched].length+' genes</span> from the input gene list.<br>'+metaDiv.prop('outerHTML')+'<div class="my-1">The full list of '+enriched.replace('enriched', '').toLowerCase()+' is available below:</div>'+enrichedLinks.join(" ")
-                })
-                .css('cursor', 'pointer')
-                .css('text-decoration', 'underline')
-                .css('text-decoration-style', 'dotted')
-                .append(json[i][enriched].length+' '+enriched.replace('enriched', '').toLowerCase())
-                .prop('outerHTML')
-        ];
-    }
-
-    $(container).DataTable( {
-        width: '100%',
-        data: dataArray,
-        responsive: true,
-        columns: [
-            {title: "Rank"},
-            {title: enriched.indexOf('Targets') > -1 ? 'Transcription Factor' : 'Protein Kinase' },
-            {title: "Hypergeometric p-value" },
-            {title: "Z-score" },
-            {title: "Combined score" },
-            {title: enriched.replace('enriched', 'Enriched ')}
-        ],
-        dom: 'B<"small"f>rt<"small row"ip>',
-        buttons: [
-            'copy',
-            {
-				extend: 'excel',
-				exportOptions: {
-					columns: [0, 1, 2, 3, 4]
-				}
-			},
-            'csv',
-            {
-				extend: 'print',
-				exportOptions: {
-					columns: [0, 1, 2, 3, 4]
-				}
-			}
-        ],
-        columnDefs: [
-            { sortable: false, targets: 5 },
-            // Sorting removed temporarily
-            {
-                targets: [ 3, 4 ],
-                visible: false,
-                searchable: false,
-            },
-        ],
-        drawCallback: function(){
-            // Enriched gene popover
-            $('.enrichment-popover-button').popover();
-        }
-    } );
-}
-
-function download(url, data, method) {
-	if (url && data) {
-		var form = document.createElement('form');
-		form.setAttribute('action', url);
-		form.setAttribute('method', method || 'post');
-
-		for ( var key in data) {
-			var inputField = document.createElement('input');
-			inputField.setAttribute('type', 'hidden');
-			inputField.setAttribute('name', key);
-			inputField.setAttribute('value', data[key]);
-			form.appendChild(inputField);
-		}
-		document.body.appendChild(form);
-		form.submit();
-		document.body.removeChild(form);
-	}
-}
-
 function downloadUri(uri, filename) {
 	var downloadAnchorNode = document.createElement('a');
 	downloadAnchorNode.setAttribute("href", uri);
@@ -339,20 +195,6 @@ function createResults(json_file) {
 		$('#genelist').text(input_list);
 	}
 
-	// Draw ChEA table
-	var chea = json_file['X2K']["transcriptionFactors"];
-	createTable(chea, "#chea-table");
-	
-	// Draw ChEA bargraph
-	drawBargraph(".chea-chart", chea);
-	
-	// Draw KEA table
-	var kea = json_file['X2K']["kinases"];
-	createTable(kea, '#kea-table');
-
-	// Draw KEA bargraph	
-	drawBargraph(".kea-chart", kea);
-	
 	// Networks functions
 	function convertX2KNode(x2k_node) { //convert the style of a node from X2K output to cytoscape
 	    return {name: x2k_node["name"], group: x2k_node["type"], pvalue: x2k_node["pvalue"]};
@@ -414,28 +256,7 @@ function createResults(json_file) {
 	    }
 	    return [clean_interactions, clean_nodes];
 	}
-	
-	// X2K Processing
-	var x2k = json_file["X2K"],
-		network = x2k.network,
-		clean_network = cleanNetwork(x2k, network),
-		clean_nodes = clean_network[1],
-		clean_interactions = clean_network[0];
-    
-    network_string = JSON.stringify(network);
-    tf_string = JSON.stringify(x2k.transcriptionFactors);
-    kinase_string = JSON.stringify(x2k.kinases);
-    x2k_d3_array = {"nodes": [], "links": []};
 
-    for (i = 0; i < clean_nodes.length; i++) {
-    	x2k_d3_array["nodes"].push(convertX2KNode(clean_nodes[i]));
-    }
-    for (i = 0; i < clean_interactions.length; i++) {
-    	x2k_d3_array["links"].push(clean_interactions[i]);
-    }
-    
-    draw_network(x2k_d3_array, ".x2k-svg", "#x2k-network");
-	
 	// G2N Processing
     // var g2n = json_file["G2N"];
 	
