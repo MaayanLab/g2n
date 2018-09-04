@@ -8,11 +8,7 @@ import * as process from 'process'
 import pretty from 'pretty'
 
 // Convert abbreviated filenames into names to be displayed as table headers
-const table_lookup = {
-    'KINASE': 'Kinome Regulation',
-    'TF': 'Transcriptional Regulation',
-    'PPI': 'Protein-Protein Interactions',
-};
+const table_lookup = {'TF': 'Transcriptional Regulation'};
 
 // Convert various file formats into the simple format we expect e.g. [[header_cell1, header_cell2], [row_1_cell_1, row_1_cell_2], ...]
 const converters = {
