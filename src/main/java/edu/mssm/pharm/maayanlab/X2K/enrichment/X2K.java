@@ -66,7 +66,6 @@ public class X2K implements SettingsChanger {
     int progress = 0;
     String note = "";
     private Collection<String> topRankedTFs;
-    private Collection<String> topRankedKinases;
     private HashSet<String> network;
     // progress tracking
     private SwingWorker<Void, Void> task = null;
@@ -81,18 +80,6 @@ public class X2K implements SettingsChanger {
 
     public X2K(Settings settings) {
         settings.loadSettings(settings);
-    }
-
-    /**
-     * @param args
-     */
-    public static void main(String[] args) {
-        if (args.length == 2) {
-            X2K x2k = new X2K();
-            x2k.run(args[0]);
-            x2k.writeFile(args[1]);
-        } else
-            log.warning("Usage: java -Xmx1024m -jar X2K.jar genelist output");
     }
 
     // Task methods
@@ -126,40 +113,6 @@ public class X2K implements SettingsChanger {
     }
 
     public void run(ArrayList<String> inputList) {
-        try {
-            if (FileUtils.validateList(inputList))
-                try {
-                    setProgress(0, "Finding transcription factors...");
-                    runChea(inputList);
-
-                    setProgress(50, "Finding network...");
-                    runG2N();
-                } catch (InterruptedException e) {
-                    log.info(e.getMessage());
-                    return;
-                }
-        } catch (ParseException e) {
-            if (e.getErrorOffset() == -1)
-                log.severe("Invalid input: " + "Input list is empty.");
-            else
-                log.severe("Invalid input: " + e.getMessage() + " at line " + (e.getErrorOffset() + 1) + " is not a valid Entrez Gene Symbol.");
-            System.exit(-1);
-        }
-    }
-
-    public void run(String inputPath) {
-        ArrayList<String> inputList = FileUtils.readFile(inputPath);
-        run(inputList);
-    }
-
-
-    private void runChea(Collection<String> genelist) {
-        chea = new ChEA(settings);
-        chea.run(genelist);
-        topRankedTFs = chea.getTopRankedList(settings.getInt(NUMBER_OF_TOP_TFS));
-    }
-
-    private void runG2N() {
         g2n = new Genes2Networks(settings);
         Integer path_length = Math.min(
                 settings.getInt(Genes2Networks.PATH_LENGTH),
@@ -169,7 +122,7 @@ public class X2K implements SettingsChanger {
         // System.out.println(settings.getInt(MINIMUM_NETWORK_SIZE));
         do {
             g2n.setSetting(Genes2Networks.PATH_LENGTH, Integer.toString(path_length));
-            g2n.run(new ArrayList<String>(topRankedTFs));
+            g2n.run(inputList);
             network = g2n.getNetwork();
             path_length++;
             // System.out.println(network.size());
@@ -210,111 +163,8 @@ public class X2K implements SettingsChanger {
         return network;
     }
 
-
-    public NetworkModelWriter constructNetwork() {
-        NetworkModelWriter nmw = new NetworkModelWriter();
-
-        for (String node : topRankedTFs)
-            nmw.addNode(node, settings.get(TF_NODE_COLOR), Shape.ELLIPSE);
-
-        for (Kinase kinase : kea.getTopRanked(settings.getInt(NUMBER_OF_TOP_KINASES)))
-            nmw.addNode(kinase.getName(), settings.get(KINASE_NODE_COLOR), Shape.ELLIPSE);
-
-        HashSet<NetworkNode> networkSet = g2n.getNetworkSet();
-        for (NetworkNode node : networkSet)
-            nmw.addNode(node.getName(), settings.get(SUBSTRATE_NODE_COLOR), Shape.ELLIPSE);
-
-        for (Kinase kinase : kea.getTopRanked(settings.getInt(NUMBER_OF_TOP_KINASES))) {
-            Set<String> substrates = kinase.getEnrichedSubstrates();
-            for (String substrate : substrates)
-                nmw.addInteraction(kinase.getName(), substrate);
-        }
-
-        for (NetworkNode node : networkSet) {
-            Set<NetworkNode> neighbors = node.getNeighbors();
-            for (NetworkNode neighbor : neighbors)
-                if (network.contains(neighbor.getName()))
-                    nmw.addInteraction(node.getName(), neighbor.getName());
-        }
-
-        return nmw;
-    }
-
-    public void writeNetworks(String outputPrefix) {
-        NetworkModelWriter nmw = constructNetwork();
-
-        if (settings.getBoolean(ENABLE_YED_OUTPUT)) {
-            yEdGraphMLWriter ygw = new yEdGraphMLWriter(outputPrefix + ".graphml");
-            ygw.open();
-            nmw.writeGraph(ygw);
-            ygw.close();
-        }
-
-        if (settings.getBoolean(ENABLE_CYTOSCAPE_OUTPUT)) {
-            XGMMLWriter xgw = new XGMMLWriter(outputPrefix + ".xgmml");
-            xgw.open();
-            nmw.writeGraph(xgw);
-            xgw.close();
-        }
-
-        if (settings.getBoolean(ENABLE_PAJEK_OUTPUT)) {
-            try {
-                PajekNETWriter pnw = new PajekNETWriter(outputPrefix + ".net");
-                pnw.open();
-                nmw.writeGraph(pnw);
-                pnw.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
-
-    }
-
-    public void writeFile(String filename) {
-        String outputPrefix = filename.replaceFirst("\\.\\w+$", "");
-
-        cheaOutput = outputPrefix + "_tf.csv";
-        chea.writeFile(cheaOutput);
-
-        g2nOutput = outputPrefix + "_network.sig";
-        g2n.writeFile(g2nOutput);
-
-        keaOutput = outputPrefix + "_kinase.csv";
-        kea.writeFile(keaOutput);
-
-        if (settings.getBoolean(ENABLE_YED_OUTPUT) || settings.getBoolean(ENABLE_CYTOSCAPE_OUTPUT) || settings.getBoolean(ENABLE_PAJEK_OUTPUT))
-            writeNetworks(outputPrefix);
-
-        SimpleXMLWriter sxw = new SimpleXMLWriter(filename);
-        sxw.startElement("Results", "");
-        sxw.startElement("TranscriptionFactors", "", "count", Integer.toString(topRankedTFs.size()));
-        for (String tf : topRankedTFs)
-            sxw.listElement("TranscriptionFactor", tf);
-        sxw.endElement();
-
-        // Filter out TFs and kinases from protein network
-        HashSet<String> filteredNetwork = new HashSet<String>(network.size());
-        filteredNetwork.addAll(network);
-        filteredNetwork.removeAll(topRankedTFs);
-        filteredNetwork.removeAll(topRankedKinases);
-
-        sxw.startElement("Network", "", "count", Integer.toString(filteredNetwork.size()));
-        for (String protein : filteredNetwork)
-            sxw.listElement("Protein", protein);
-        sxw.endElement();
-
-        sxw.startElement("Kinases", "", "count", Integer.toString(topRankedKinases.size()));
-        for (String kinase : topRankedKinases)
-            sxw.listElement("Kinase", kinase);
-        sxw.endElement();
-        sxw.close();
-    }
-
     public Collection<String> getTopRankedTFs() {
         return topRankedTFs;
     }
 
-    public Collection<TranscriptionFactor> getRankedTFs() {
-        return chea.getRankedList();
-    }
 }

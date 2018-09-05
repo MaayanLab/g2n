@@ -1,10 +1,6 @@
 package edu.mssm.pharm.maayanlab.X2K.web;
 
-import edu.mssm.pharm.maayanlab.ChEA.ChEA;
 import edu.mssm.pharm.maayanlab.Genes2Networks.Genes2Networks;
-import edu.mssm.pharm.maayanlab.Genes2Networks.NetworkNode;
-import edu.mssm.pharm.maayanlab.KEA.KEA;
-import edu.mssm.pharm.maayanlab.X2K.enrichment.Network;
 import edu.mssm.pharm.maayanlab.X2K.enrichment.X2K;
 import edu.mssm.pharm.maayanlab.common.web.JSONify;
 import edu.mssm.pharm.maayanlab.common.web.PartReader;
@@ -26,9 +22,6 @@ public class ResultsServlet extends HttpServlet {
     private static final HashMap<String, String> defaultSettings = new HashMap<String, String>();
 
     static {
-        defaultSettings.put(ChEA.SORT_BY, ChEA.PVALUE);
-        defaultSettings.put(ChEA.INCLUDED_ORGANISMS, null);
-        defaultSettings.put(ChEA.BACKGROUND_DATABASE, null);
         defaultSettings.put(Genes2Networks.PATH_LENGTH, null);
         defaultSettings.put(Genes2Networks.MAXIMUM_NUMBER_OF_EDGES, null);
         defaultSettings.put(Genes2Networks.MAXIMUM_NUMBER_OF_INTERACTIONS, null);
@@ -55,12 +48,8 @@ public class ResultsServlet extends HttpServlet {
         defaultSettings.put(Genes2Networks.ENABLE_SNAVI, new String("false"));
         defaultSettings.put(Genes2Networks.ENABLE_STELZL, new String("false"));
         defaultSettings.put(Genes2Networks.ENABLE_VIDAL, new String("false"));
-        defaultSettings.put(KEA.KINASE_INTERACTIONS, null);
-        defaultSettings.put(KEA.SORT_BY, KEA.PVALUE);
         defaultSettings.put(X2K.MINIMUM_NETWORK_SIZE, null);
-        // defaultSettings.put(X2K.NUMBER_OF_TOP_TFS, null);
         defaultSettings.put(X2K.NUMBER_OF_TOP_TFS, null);
-        //defaultSettings.put(X2K.NUMBER_OF_TOP_KINASES, null);
     }
 
     private String g2n;
@@ -115,11 +104,6 @@ public class ResultsServlet extends HttpServlet {
 
         // Write output
         JSONify json = Context.getJSONConverter();
-
-        JSONify ChEA_json = Context.getJSONConverter();
-        ChEA_json.add("type", "ChEA");
-        ChEA_json.add("tfs", app.getRankedTFs());
-        json.add("ChEA", ChEA_json.toString());
 
         JSONify G2N_json = Context.getJSONConverter();
         G2N_json.add("type", "G2N");
