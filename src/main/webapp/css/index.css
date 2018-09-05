@@ -1,14 +1,35 @@
-/* X2K header and logo */
-#logo {
-    margin: 10px;
-    padding: 0;
-    text-align: center;
+
+body {
+    position: relative;
+    background: #f8f9fa;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
 }
 
-#logo-png {
-    width: 250px;
-    height: auto;
-    cursor: pointer;
+/* Scrollspy anchor fix */
+#command-line,
+#datasets {
+	margin-top: -70px;
+    padding-top: 110px;
+}
+
+#x2k-navbar{
+	margin-left: -32px;
+	margin-right: -32px;
+}
+
+#scrollspy-nav {
+	margin-top: 30px;
+}
+/* X2K header and logo */
+#logo {
+    text-align: center;
+	-webkit-transition: width 0.05s;
+    transition: width 0.05s;
+}
+ 
+.shrink {
+	height: 50px;
 }
 
 #x2k_title {
@@ -18,6 +39,10 @@
     font-size: 1rem;
     letter-spacing: -0.2px;
     font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+    color: #1A9BFC;
 }
 
 #example-link {
@@ -37,12 +62,7 @@
 }
 
 #footer {
-    bottom: 0;
     color: #707070;
-    height: 2rem;
-    left: 0;
-    position: relative;
-    width:100%;
 }
 
 #ljp-table{
@@ -82,6 +102,11 @@ table.dataTable thead .sorting_desc_disabled:after {
   right: 0.8em;
   content: "\25BC";
 }
+
+a {
+	outline: none;
+}
+
 
 /* Loader */
 #loader {
@@ -141,5 +166,9 @@ table.dataTable thead .sorting_desc_disabled:after {
 
     width: 100%;
     height: 100%;
-    background:rgba(255,255,255,0.5);
+    background:rgba(255,255,255,0.4);
+}
+
+.tooltip-inner {
+    margin-left: -20px !important;
 }

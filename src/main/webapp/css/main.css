@@ -23,15 +23,6 @@ a:link, a:visited {
 	color: #0098ff;
 }
 
-#footer > p{
-	margin-bottom: 10px;	
-}
-
-#citations{
-	font-size: 12px;
-	margin: auto;
-}
-
 a:hover {
 	color: #026196;
 }
@@ -166,17 +157,6 @@ ul#menu li a.information.active, ul#menu li a.information:hover {
 	background-color: #2baaff;
 	color: white;
 	border: 2px solid #4cb7ff;
-}
-
-#footer {
-	clear: both;
-	width: 50%;
-  	margin: 0 auto;
-	margin-top: 20px;
-}
-
-#footer h3 {
-	margin: 10px 0 5px 0;
 }
 
 #download_buttons {

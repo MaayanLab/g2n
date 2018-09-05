@@ -16,8 +16,8 @@ apply plugin: 'war'
 apply plugin: 'com.moowork.node'
 apply plugin: 'com.bmuschko.tomcat'
 
-group = 'edu.mssm.pharm.maayanlab.x2k'
-description = 'X2K'
+group = 'edu.mssm.pharm.maayanlab.g2n'
+description = 'G2N'
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
@@ -77,7 +77,7 @@ build.dependsOn buildProject
 
 tomcat {
     httpPort = 8080
-    contextPath = "X2K"
+    contextPath = "G2N"
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {

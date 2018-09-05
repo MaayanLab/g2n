@@ -59,13 +59,7 @@ function cleanArray(actual) {
 	}
 
 $(document).ready(function () {
-    submitButtonListener("results_submit", "/X2K/results", "#x2k-form");
-    submitButtonListener("results_submit_ljp", "/X2K/results", "#x2k-form");
-    // submitButtonListener("x2k_submit", "http://localhost:8080/X2K/network");
-    submitButtonListener("chea_submit", "/X2K/ChEA", "#chea-form");
-    submitButtonListener("kea_submit", "/X2K/KEA", "#kea-form");
-    submitButtonListener("g2n_submit", "/X2K/G2N", "#g2n-form");
-
+    submitButtonListener("results_submit", "/G2N/results", "#x2k-form");
     // Check for Internet Explorer
     $(document).ready(function() {
         if ((!!window.MSInputMethodContext && !!document.documentMode) || navigator.userAgent.indexOf("MSIE")!=-1) {

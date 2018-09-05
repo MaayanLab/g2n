@@ -9,7 +9,7 @@
 
     <link rel="stylesheet" href="dist/css/atooltip.css">
     <link rel="stylesheet" href="dist/css/results.css">
-    <link rel="stylesheet" href="dist/css/index_beta.css">
+    <link rel="stylesheet" href="dist/css/index.css">
 
     <script src="dist/js/bargraph.js"></script>
     <script src="dist/js/index.js"></script>
@@ -28,9 +28,8 @@
         <div class="col-sm-10">
             <nav class="navbar navbar-light sticky-top bg-light justify-content-center navbar-expand-sm"
                  id="x2k-navbar">
-                <a class="navbar-brand" href="/X2K">
-                    <img id="logo" src="static/logo.png" height="50px" class="d-inline-block full-logo">
-                    <!-- <p class="caption">A web interface for the Expression to Kinases application</p> -->
+                <a class="navbar-brand" href="/G2N">
+                    <h1>G2N Web</h1>
                 </a>
                 <div id="scrollspy-nav" class="collapse navbar-collapse">
                     <ul class="nav nav-pills">
