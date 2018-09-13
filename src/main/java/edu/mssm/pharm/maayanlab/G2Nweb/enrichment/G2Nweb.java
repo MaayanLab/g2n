@@ -1,13 +1,15 @@
 package edu.mssm.pharm.maayanlab.G2Nweb.enrichment;
 
-import edu.mssm.pharm.maayanlab.ChEA.ChEA;
 import edu.mssm.pharm.maayanlab.Genes2Networks.Genes2Networks;
 import edu.mssm.pharm.maayanlab.Genes2Networks.NetworkNode;
 import edu.mssm.pharm.maayanlab.common.core.Settings;
 import edu.mssm.pharm.maayanlab.common.core.SettingsChanger;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.HashSet;
 
 public class G2Nweb implements SettingsChanger {
 
@@ -68,7 +70,6 @@ public class G2Nweb implements SettingsChanger {
             set(Genes2Networks.ENABLE_VIDAL, "false");
         }
     };
-    protected ChEA chea;
     protected Genes2Networks g2n;
     private HashSet<String> network;
 
