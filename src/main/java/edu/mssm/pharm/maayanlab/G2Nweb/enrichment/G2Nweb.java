@@ -1,7 +1,6 @@
 package edu.mssm.pharm.maayanlab.G2Nweb.enrichment;
 
 import edu.mssm.pharm.maayanlab.ChEA.ChEA;
-import edu.mssm.pharm.maayanlab.ChEA.TranscriptionFactor;
 import edu.mssm.pharm.maayanlab.Genes2Networks.Genes2Networks;
 import edu.mssm.pharm.maayanlab.Genes2Networks.NetworkNode;
 import edu.mssm.pharm.maayanlab.common.core.Settings;
@@ -12,17 +11,17 @@ import java.util.*;
 
 public class G2Nweb implements SettingsChanger {
 
-    public final static String MINIMUM_NETWORK_SIZE = "min_network_size";
-    public final static String MAXIMUM_PATH_LENGTH = "max_path_length";
-    public final static String NUMBER_OF_TOP_TFS = "number of top TFs";
-    public final static String NUMBER_OF_TOP_KINASES = "number of top kinases";
-    public final static String ENABLE_YED_OUTPUT = "output results in yEd";
-    public final static String ENABLE_CYTOSCAPE_OUTPUT = "output results in Cytoscape";
-    public final static String ENABLE_PAJEK_OUTPUT = "output results in Pajek";
-    public final static String TF_NODE_COLOR = "color of TF nodes";
-    public final static String KINASE_NODE_COLOR = "color of kinase nodes";
-    public final static String SUBSTRATE_NODE_COLOR = "color of substrate nodes";
-    public final static String PATH_LENGTH = "actual_path_length";
+    private final static String MAXIMUM_PATH_LENGTH = "max_path_length";
+    private final static String MINIMUM_NETWORK_SIZE = "min_network_size";
+    private final static String NUMBER_OF_TOP_TFS = "number of top TFs";
+    private final static String NUMBER_OF_TOP_KINASES = "number of top kinases";
+    private final static String ENABLE_YED_OUTPUT = "output results in yEd";
+    private final static String ENABLE_CYTOSCAPE_OUTPUT = "output results in Cytoscape";
+    private final static String ENABLE_PAJEK_OUTPUT = "output results in Pajek";
+    private final static String TF_NODE_COLOR = "color of TF nodes";
+    private final static String KINASE_NODE_COLOR = "color of kinase nodes";
+    private final static String SUBSTRATE_NODE_COLOR = "color of substrate nodes";
+    private final static String PATH_LENGTH = "actual_path_length";
     private final Settings settings = new Settings() {
         {
             // Integer: minimum network size; otherwise, the path length is increased until the minimum met. [>0]
@@ -92,7 +91,7 @@ public class G2Nweb implements SettingsChanger {
 
     public void run(ArrayList<String> inputList) {
         g2n = new Genes2Networks(settings);
-        Integer path_length = Math.min(
+        int path_length = Math.min(
                 settings.getInt(Genes2Networks.PATH_LENGTH),
                 settings.getInt(MAXIMUM_PATH_LENGTH)
         );
@@ -110,15 +109,20 @@ public class G2Nweb implements SettingsChanger {
         setSetting(G2Nweb.PATH_LENGTH, Integer.toString(path_length - 1));
     }
 
-    public Network webNetworkFiltered() {
+    public Network webNetworkFiltered(ArrayList<String> textGenes) {
         Network network = new Network();
-        ArrayList<String> SimpleNames = new ArrayList<String>();
+        ArrayList<String> SimpleNames = new ArrayList<>();
 
-        for (TranscriptionFactor tf : chea.getTopRanked(settings.getInt(NUMBER_OF_TOP_TFS))) {
-            network.addNode(Network.nodeTypes.transcriptionFactor, tf, tf.getSimpleName());
-            SimpleNames.add(tf.getSimpleName());
+        ArrayList<NetworkNode> inputNodes = new ArrayList<>();
+        for (String inputNode : textGenes) {
+            inputNodes.add(new NetworkNode(inputNode, "NA", "NA", "inputNode", "NA"));
         }
-        
+
+        for (NetworkNode in : inputNodes) {
+            network.addNode(Network.nodeTypes.inputNode, in, in.getName());
+            SimpleNames.add(in.getName());
+        }
+
         HashSet<NetworkNode> networkSet = g2n.getNetworkSet();
         for (NetworkNode node : networkSet) {
             if (node.getName() != null) {

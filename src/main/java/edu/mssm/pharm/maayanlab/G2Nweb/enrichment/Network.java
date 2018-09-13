@@ -5,7 +5,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.google.gson.annotations.Expose;
-import edu.mssm.pharm.maayanlab.ChEA.TranscriptionFactor;
 import edu.mssm.pharm.maayanlab.Genes2Networks.NetworkNode;
 
 import java.lang.reflect.Type;
@@ -22,9 +21,9 @@ public class Network {
     private HashMap<String, Integer> nodeLocation;
 
     public Network() {
-        nodes = new ArrayList<Node>();
-        interactions = new ArrayList<Interaction>();
-        nodeLocation = new HashMap<String, Integer>();
+        nodes = new ArrayList<>();
+        interactions = new ArrayList<>();
+        nodeLocation = new HashMap<>();
     }
 
     public void addNode(nodeTypes type, Object o, String name) {
@@ -43,7 +42,7 @@ public class Network {
     }
 
     public enum nodeTypes {
-        transcriptionFactor,
+        inputNode,
         networkNode
     }
 
@@ -51,11 +50,11 @@ public class Network {
         @Override
         public JsonElement serialize(Node node, Type type, JsonSerializationContext jsc) {
             JsonObject jsonObject = new JsonObject();
-            if (node.type == nodeTypes.transcriptionFactor) {
-                TranscriptionFactor tf = (TranscriptionFactor) node.object;
-                jsonObject.addProperty("name", tf.getName());
+            if (node.type == nodeTypes.inputNode) {
+                NetworkNode in = (NetworkNode) node.object;
+                jsonObject.addProperty("name", in.getName());
                 jsonObject.addProperty("type", "tf");
-                jsonObject.addProperty("pvalue", tf.getPValue());
+                jsonObject.addProperty("pvalue", -1);
             } else {
                 NetworkNode nn = (NetworkNode) node.object;
                 jsonObject.addProperty("name", nn.getName());

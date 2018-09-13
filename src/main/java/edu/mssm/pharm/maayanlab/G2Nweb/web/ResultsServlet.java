@@ -50,7 +50,7 @@ public class ResultsServlet extends HttpServlet {
 
         JSONify G2N_json = Context.getJSONConverter();
         G2N_json.add("type", "G2N");
-        G2N_json.add("network", app.webNetworkFiltered());
+        G2N_json.add("network", app.webNetworkFiltered(textGenes));
         G2N_json.add("input_list", textGenes);
         json.add("G2N", G2N_json.toString());
 
