@@ -5,7 +5,7 @@
  * @since		03/01/2013
  */
 
-package edu.mssm.pharm.maayanlab.X2K.web;
+package edu.mssm.pharm.maayanlab.G2Nweb.web;
 
 import java.util.Set;
 
@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import edu.mssm.pharm.maayanlab.X2K.enrichment.Network;
+import edu.mssm.pharm.maayanlab.G2Nweb.enrichment.Network;
 import edu.mssm.pharm.maayanlab.common.web.JSONify;
 
 @WebListener

@@ -1,4 +1,4 @@
-package edu.mssm.pharm.maayanlab.X2K.enrichment;
+package edu.mssm.pharm.maayanlab.G2Nweb.enrichment;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -7,7 +7,6 @@ import com.google.gson.JsonSerializer;
 import com.google.gson.annotations.Expose;
 import edu.mssm.pharm.maayanlab.ChEA.TranscriptionFactor;
 import edu.mssm.pharm.maayanlab.Genes2Networks.NetworkNode;
-import edu.mssm.pharm.maayanlab.KEA.Kinase;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -34,7 +33,6 @@ public class Network {
     }
 
     public void addInteraction(String node1, String node2) {
-//		System.out.println("Interation from " + node1 + " to " + node2);
         int loc1 = nodeLocation.get(node1);
         int loc2 = nodeLocation.get(node2);
         interactions.add(new Interaction(loc1, loc2));
@@ -45,7 +43,6 @@ public class Network {
     }
 
     public enum nodeTypes {
-        kinase,
         transcriptionFactor,
         networkNode
     }
@@ -59,11 +56,6 @@ public class Network {
                 jsonObject.addProperty("name", tf.getName());
                 jsonObject.addProperty("type", "tf");
                 jsonObject.addProperty("pvalue", tf.getPValue());
-            } else if (node.type == nodeTypes.kinase) {
-                Kinase kinase = (Kinase) node.object;
-                jsonObject.addProperty("name", kinase.getName());
-                jsonObject.addProperty("type", "kinase");
-                jsonObject.addProperty("pvalue", kinase.getPValue());
             } else {
                 NetworkNode nn = (NetworkNode) node.object;
                 jsonObject.addProperty("name", nn.getName());

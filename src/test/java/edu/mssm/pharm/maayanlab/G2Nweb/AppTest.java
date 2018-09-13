@@ -1,4 +1,4 @@
-package edu.mssm.pharm.maayanlab.X2K;
+package edu.mssm.pharm.maayanlab.G2Nweb;
 
 import org.junit.Test;
 import org.mockito.Mockito;

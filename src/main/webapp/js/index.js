@@ -98,22 +98,6 @@ $(document).ready(function () {
         }
     });
 
-//    showToolDesc("x2k");
-//    showToolDesc("chea");
-//    showToolDesc("g2n");
-//    showToolDesc("kea");
-//
-//    showHelpDesc("about");
-//    showHelpDesc("api");
-//    showHelpDesc("commandline");
-//    showHelpDesc("datasets");
-//
-//    $("#nav-case-tab").on("click", function () {
-//        $(".desc").hide();
-//        $("#case-desc").show();
-//        $("#analysis-row").hide();
-//    })
-
     $('.datatable').DataTable({
         scrollX: true,
     });

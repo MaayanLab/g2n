@@ -100,7 +100,7 @@ function recordsToCsv(records) {
 function exportCsv(name, export_json) {
 	var str, array;
 
-	if(name ==="X2K") {
+	if(name ==="G2Nweb") {
 	    var tfs = typeof objArray !== 'object' ? export_json["transcriptionFactors"] : objArray;
 	    var kinases = typeof objArray !== 'object' ? export_json["kinases"] : objArray;
 	    array = tfs.concat(kinases);
@@ -196,7 +196,7 @@ function createResults(json_file) {
 	}
 
 	// Networks functions
-	function convertX2KNode(x2k_node) { //convert the style of a node from X2K output to cytoscape
+	function convertX2KNode(x2k_node) { //convert the style of a node from G2Nweb output to cytoscape
 	    return {name: x2k_node["name"], group: x2k_node["type"], pvalue: x2k_node["pvalue"]};
 	}
 

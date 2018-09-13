@@ -1,4 +1,4 @@
-package edu.mssm.pharm.maayanlab.X2K.web;
+package edu.mssm.pharm.maayanlab.G2Nweb.web;
 
 import edu.mssm.pharm.maayanlab.common.web.JSONify;
 
