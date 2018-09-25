@@ -7,7 +7,7 @@ function insertExample() {
     return false;
 }
 
-function submitButtonListener(button, endpoint, settings_form) {
+function submitButtonListener(button, settings_form) {
     $('#' + button).click(function (evt) {
         $("#blocker").show();
         $("#loader").show().css({position: 'absolute', top: $(window).scrollTop() + $(window).height() / 2});
@@ -15,7 +15,6 @@ function submitButtonListener(button, endpoint, settings_form) {
         var $form = $(settings_form),
             text_input = $("#genelist").val();
 
-        $form.attr("action", endpoint);
 
         // Hack that works like a charm
         var input = $("<input>")
@@ -25,25 +24,6 @@ function submitButtonListener(button, endpoint, settings_form) {
 
         if (text_input.length > 0) {
             $form.submit();
-        }
-    });
-}
-
-function showToolDesc(tool) {
-    $("#nav-" + tool + "-tab").on("click", function () {
-        $(".desc").hide();
-        $("#" + tool + "-desc").show();
-        $("#analysis-row").show();
-    })
-}
-
-function showHelpDesc(page) {
-    $("#nav-" + page + "-tab").on("click", function () {
-        $(".desc").hide();
-        $("#analysis-row").hide();
-
-        if (page === "datasets") {
-
         }
     });
 }
@@ -59,7 +39,7 @@ function cleanArray(actual) {
 	}
 
 $(document).ready(function () {
-    submitButtonListener("results_submit", "/G2N/results", "#x2k-form");
+    submitButtonListener("results_submit", "#x2k-form");
     // Check for Internet Explorer
     $(document).ready(function() {
         if ((!!window.MSInputMethodContext && !!document.documentMode) || navigator.userAgent.indexOf("MSIE")!=-1) {
@@ -96,10 +76,6 @@ $(document).ready(function () {
 	        
 	        $('#gene-count').text(len + genes);
         }
-    });
-
-    $('.datatable').DataTable({
-        scrollX: true,
     });
 
     $("body").tooltip({ selector: '[data-toggle=tooltip]' });

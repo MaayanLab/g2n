@@ -1,4 +1,3 @@
-
 body {
     position: relative;
     background: #f8f9fa;
@@ -13,9 +12,8 @@ body {
     padding-top: 110px;
 }
 
-#x2k-navbar{
-	margin-left: -32px;
-	margin-right: -32px;
+#g2n-navbar{
+	padding-left: 8%;
 }
 
 #scrollspy-nav {

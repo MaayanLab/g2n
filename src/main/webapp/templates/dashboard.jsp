@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div class="container-fluid" id="results-dashboard">
-    <div class="row">
+    <div class="row justify-content-center bg-light">
         <div class="col-10 d-flex align-items-stretch" id="g2n">
             <div class="card w-100">
                 <div class="card-header">

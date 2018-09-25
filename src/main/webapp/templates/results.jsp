@@ -16,8 +16,8 @@
 </head>
 <body>
 <!--Header-->
-<nav class="navbar navbar-light bg-light justify-content-center navbar-expand-sm" id="x2k-navbar">
-    <a class="navbar-brand" href="/X2K">
+<nav class="navbar navbar-light bg-light justify-content-center navbar-expand-sm" id="g2n-navbar">
+    <a class="navbar-brand" href="/G2N">
         <img id="logo" src="static/logo.png" height="50px" class="d-inline-block full-logo">
     </a>
     <!-- <button class="btn btn-primary lead">View Input Genes</button> -->

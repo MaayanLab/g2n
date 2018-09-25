@@ -25,41 +25,34 @@
 
 <div class="container-fluid">
     <div class="row justify-content-center bg-light">
-        <div class="col-sm-10">
+        <div class="col-sm-10 show-on-ie" style="display: none; color: red; font-weight: bold; text-align:center;">
+            For best app performance, please use a browser other than Internet Explorer.
+        </div>
+    </div>
             <nav class="navbar navbar-light sticky-top bg-light justify-content-center navbar-expand-sm"
-                 id="x2k-navbar">
+                 id="g2n-navbar">
                 <a class="navbar-brand" href="/G2N">
-                    <h1>G2N Web</h1>
+                    <img id="logo" src="static/logo.png" height="60px" class="d-inline-block full-logo">
                 </a>
                 <div id="scrollspy-nav" class="collapse navbar-collapse">
                     <ul class="nav nav-pills">
                         <li class="nav-item">
                             <a class="nav-link active" href="#x2k-scroll">Submit</a>
                         </li>
-                        <%--<li class="nav-item">--%>
-                        <%--<a class="nav-link" href="#example">Example</a>--%>
-                        <%--</li>--%>
-                        <%--<li class="nav-item">--%>
-                        <%--<a class="nav-link" href="#api">API</a>--%>
-                        <%--</li>--%>
                         <li class="nav-item">
                             <a class="nav-link" href="#command-line">Command Line</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#datasets">Datasets</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#about">About</a>
-                        </li>
                     </ul>
                 </div>
             </nav>
-        </div>
-        <div class="col-sm-10 show-on-ie" style="display: none; color: red; font-weight: bold; text-align:center;">
-            For best app performance, please use a browser other than Internet Explorer.
+    <div class="row justify-content-center bg-light">
+        <div class="col-sm-10">
         </div>
         <div class="col-sm-10 bg-white">
-            <div class="my-3 mx-2">
+            <div id="submit-form" class="my-3 mx-2">
                 <h4>Submit</h4>
                 <div class="my-3">
                     <p id="x2k-desc" class="desc">
@@ -72,7 +65,7 @@
                         connected with each other by using known protein-protein interactions.
                     </p>
                 </div>
-                <form id="x2k-form" enctype="multipart/form-data" method="POST">
+                <form id="x2k-form" enctype="multipart/form-data" action="/G2N/results" method="POST">
                     <div class="form-group">
                         <div class="row">
                             <div class="col-sm-6 my-2">
