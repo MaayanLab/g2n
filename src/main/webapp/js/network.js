@@ -74,26 +74,26 @@ function draw_network(json, svg_id, body) {
     }
 
     function linkColour(d) {
-        var source_tf = (d.source_type === "tf"),
-            source_kinase = ((d.source_type === "kinase") || (d.source_type === "input_protein")),
-            source_other = ((d.source_type === "other") || (d.source_type === "intermediate")),
-            target_tf = (d.target_type === "tf"),
-            target_kinase = ((d.target_type === "kinase") || (d.target_type === "input_protein")),
-            target_other = ((d.target_type === "other") || (d.target_type === "intermediate"));
-
-        if ((source_tf) && (target_tf)) {
-            return "#FF546D";
-        } else if ((source_kinase) && (target_kinase)) {
-            return "#84A6EE";
-        } else if ((source_other) && (target_other)) {
-            return "lightgray";
-        } else if (((source_tf) && (target_kinase)) || ((source_kinase) && (target_tf))) {
-            return "#84A6EE";
-        } else if (((source_tf) && (target_other)) || ((source_other) && (target_tf))) {
-            return "#FF6A3C";
-        } else if (((source_kinase) && (target_other)) || ((source_other) && (target_kinase))) {
-            return "#269C26";
-        }
+        // var source_tf = (d.source_type === "tf"),
+        //     source_kinase = ((d.source_type === "kinase") || (d.source_type === "input_protein")),
+        //     source_other = ((d.source_type === "other") || (d.source_type === "intermediate")),
+        //     target_tf = (d.target_type === "tf"),
+        //     target_kinase = ((d.target_type === "kinase") || (d.target_type === "input_protein")),
+        //     target_other = ((d.target_type === "other") || (d.target_type === "intermediate"));
+        //
+        // if ((source_tf) && (target_tf)) {
+        //     return "#FF546D";
+        // } else if ((source_kinase) && (target_kinase)) {
+        //     return "#84A6EE";
+        // } else if ((source_other) && (target_other)) {
+        //     return "lightgray";
+        // } else if (((source_tf) && (target_kinase)) || ((source_kinase) && (target_tf))) {
+        //     return "#84A6EE";
+        // } else if (((source_tf) && (target_other)) || ((source_other) && (target_tf))) {
+        //     return "#FF6A3C";
+        // } else if (((source_kinase) && (target_other)) || ((source_other) && (target_kinase))) {
+        //     return "#269C26";
+        // }
         if (d.source_type === "kinase") {
             return "#269C26"
         } else {
@@ -235,106 +235,6 @@ function draw_network(json, svg_id, body) {
             .attr("y2", 10*coeff)
             .attr("stroke", "#596877")
             .attr("stroke-width","1");
-    }
-
-    function draw_legend(g, graph_type, coeff) {
-        var legend = g.append("g")
-            .attr("class", "legend")
-            .attr("transform", "translate(" + 50*coeff + ", 0)");
-
-        var bg = legend.append("g")
-            .attr("class", "legend-background");
-
-        bg.append("rect")
-            .attr("fill", "white")
-            .attr("opacity", "0.8")
-            .attr("width", 900*coeff)
-            .attr("height", 25*coeff);
-
-        var tf = legend.append("g")
-            .attr("class", "legend-item")
-            .attr("transform", "translate(" + 10*coeff + "," + 5*coeff + ")");
-        tf.append("circle")
-            .attr("cx", 5*coeff)
-            .attr("cy", 10*coeff)
-            .attr("r", 10*coeff)
-            .attr("fill", "#FF546D");
-        tf.append("text")
-            .attr("x", 20*coeff)
-            .attr("y", 18*coeff)
-            .attr("font-family", "sans-serif")
-            .attr("font-size", "1rem")
-            .text("Transcription factor");
-
-
-        var ip = legend.append("g")
-            .attr("class", "legend-item")
-            .attr("transform", "translate(" + 250*coeff + "," + 5*coeff + ")");
-        ip.append("circle")
-            .attr("cx", 5*coeff)
-            .attr("cy", 10*coeff)
-            .attr("r", 10*coeff)
-            .attr("fill", "lightgrey");
-        ip.append("text")
-            .attr("x", 20*coeff)
-            .attr("y", 18*coeff)
-            .attr("font-family", "sans-serif")
-            .attr("font-size", "1rem")
-            .text("Intermediate protein");
-
-
-        var ppi = legend.append("g")
-            .attr("class", "legend-item")
-            .attr("transform", "translate(" + 500*coeff + "," + 5*coeff + ")");
-        ppi.append("line")
-            .attr("x1", 0)
-            .attr("y1", 10*coeff)
-            .attr("x2", 15*coeff)
-            .attr("y2", 10*coeff)
-            .attr("stroke", "lightgray")
-            .attr("stroke-width", "3");
-        ppi.append("text")
-            .attr("x", 20*coeff)
-            .attr("y", 18*coeff)
-            .attr("font-family", "sans-serif")
-            .attr("font-size", "1rem")
-            .text("PPI");
-
-        if (graph_type === "x2k") {
-            ppi.attr("transform", "translate(" + 820*coeff + "," + 5*coeff + ")");
-
-            var kinase = legend.append("g")
-                .attr("class", "legend-item")
-                .attr("transform", "translate(" + 500*coeff + "," + 5*coeff + ")");
-            kinase.append("circle")
-                .attr("cx", 5*coeff)
-                .attr("cy", 10*coeff)
-                .attr("r", 10*coeff)
-                .attr("fill", "#3E8CD6");
-            kinase.append("text")
-                .attr("x", 20*coeff)
-                .attr("y", 18*coeff)
-                .attr("font-family", "sans-serif")
-                .attr("font-size", "1rem")
-                .text("Kinase");
-
-            var phosph = legend.append("g")
-                .attr("class", "legend-item")
-                .attr("transform", "translate(" + 620*coeff + "," + 5*coeff + ")");
-            phosph.append("line")
-                .attr("x1", 0)
-                .attr("y1", 10*coeff)
-                .attr("x2", 15*coeff)
-                .attr("y2", 10*coeff)
-                .attr("stroke", "#269C26")
-                .attr("stroke-width", "3");
-            phosph.append("text")
-                .attr("x", 20*coeff)
-                .attr("y", 18*coeff)
-                .attr("font-family", "sans-serif")
-                .attr("font-size", "1rem")
-                .text("Phosphorylation");
-        }
     }
 
     // Magic number
@@ -524,6 +424,4 @@ function draw_network(json, svg_id, body) {
     draw_zoom_controls(svg, graph_type, coeff);
     d3.select('#'+graph_type+'-zoom-in').on('click', function () {zoom.scaleBy(g.transition().duration(750), 1.3);});
     d3.select('#'+graph_type+'-zoom-out').on('click', function () {zoom.scaleBy(g.transition().duration(750), 1 / 1.3);});
-
-    draw_legend(svg, graph_type, coeff);
 }

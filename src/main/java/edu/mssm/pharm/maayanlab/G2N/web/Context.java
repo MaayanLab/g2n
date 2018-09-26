@@ -5,11 +5,11 @@
  * @since 03/01/2013
  */
 
-package edu.mssm.pharm.maayanlab.G2Nweb.web;
+package edu.mssm.pharm.maayanlab.G2N.web;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import edu.mssm.pharm.maayanlab.G2Nweb.enrichment.Network;
+import edu.mssm.pharm.maayanlab.G2N.enrichment.Network;
 import edu.mssm.pharm.maayanlab.common.web.JSONify;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

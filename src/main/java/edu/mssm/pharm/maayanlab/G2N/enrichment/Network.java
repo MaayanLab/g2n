@@ -1,4 +1,4 @@
-package edu.mssm.pharm.maayanlab.G2Nweb.enrichment;
+package edu.mssm.pharm.maayanlab.G2N.enrichment;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

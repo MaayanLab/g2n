@@ -16,7 +16,7 @@ apply plugin: 'war'
 apply plugin: 'com.moowork.node'
 apply plugin: 'com.bmuschko.tomcat'
 
-group = 'edu.mssm.pharm.maayanlab.g2n'
+group = 'edu.mssm.pharm.maayanlab.G2N'
 description = 'G2N'
 
 sourceCompatibility = 1.7

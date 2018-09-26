@@ -1,4 +1,4 @@
-package edu.mssm.pharm.maayanlab.G2Nweb.enrichment;
+package edu.mssm.pharm.maayanlab.G2N.enrichment;
 
 import edu.mssm.pharm.maayanlab.Genes2Networks.Genes2Networks;
 import edu.mssm.pharm.maayanlab.Genes2Networks.NetworkNode;

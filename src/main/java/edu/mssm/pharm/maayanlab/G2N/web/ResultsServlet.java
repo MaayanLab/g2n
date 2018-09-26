@@ -1,6 +1,6 @@
-package edu.mssm.pharm.maayanlab.G2Nweb.web;
+package edu.mssm.pharm.maayanlab.G2N.web;
 
-import edu.mssm.pharm.maayanlab.G2Nweb.enrichment.G2Nweb;
+import edu.mssm.pharm.maayanlab.G2N.enrichment.G2Nweb;
 import edu.mssm.pharm.maayanlab.common.web.JSONify;
 import edu.mssm.pharm.maayanlab.common.web.PartReader;
 

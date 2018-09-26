@@ -15,7 +15,6 @@
     <script src="dist/js/index.js"></script>
     <script src="dist/js/ljp.js"></script>
     <script src="dist/js/network.js"></script>
-    <script src="dist/js/results_index.js"></script>
     <script src="dist/js/results.js"></script>
 </head>
 
