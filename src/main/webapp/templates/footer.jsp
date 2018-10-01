@@ -2,14 +2,16 @@
     <div class="col-3">
         <h5>Citations</h5>
         <p><a href="https://academic.oup.com/nar/article/46/W1/W171/5003452">
-            Clarke DJB and Kuleshov MV, Schilder BM, Torre D, Duffy ME, Keenan AB, Lachmann A, Feldmann AS,
-            Gundersen GW, Silverstein MC, Wang Z, Ma’ayan A. eXpression2Kinases (X2K) Web: linking expression signatures
-            to upstream cell signaling networks. Nucleic Acid Research Nucleic Acids Research, Volume
-            46, Issue W1: 171–179 (2018)
+            Clarke et al. eXpression2Kinases (X2K) Web: linking expression signatures
+            to upstream cell signaling networks. Nucleic Acid Research Nucleic Acids Research, V46, W1: 171-179 (2018)
         </a></p>
         <p><a href="https://www.ncbi.nlm.nih.gov/pubmed/22080467">Chen EY, Xu H, Gordonov S, Lim MP,
             Perkins MH, Ma'ayan A. Expression2Kinases: mRNA profiling linked
             to multiple upstream regulatory layers. Bioinformatics. 28:105 (2012)</a>
+        </p>
+        <p><a href="https://www.ncbi.nlm.nih.gov/pubmed/17916244">Berger SI, Posner JM, Ma'ayan A.
+            Genes2Networks: connecting lists of gene symbols using mammalian protein interactions databases.
+            BMC Bioinformatics. 8:372 (2007)</a>
         </p>
     </div>
     <div class="col-4">

@@ -32,9 +32,7 @@ dependencies {
   tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
         "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",
         "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
-    // compile group: 'org.apache.tomcat', name: 'tomcat-jdbc', version:"${tomcatVersion}"
 
-  compile 'com.github.MaayanLab:ChEA:master-SNAPSHOT'
   compile 'com.github.MaayanLab:Genes2Networks:master-SNAPSHOT'
   compile 'com.github.MaayanLab.common:common-swing:master-SNAPSHOT'
   compile group: 'com.google.code.gson', name: 'gson', version:'2.2.1'

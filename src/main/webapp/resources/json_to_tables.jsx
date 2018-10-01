@@ -127,7 +127,7 @@ const transformers = {
             return (
                 <span style={{whiteSpace: "nowrap"}}>
                     {row['Source PMID'].split(';').map(trim).map((pmid, ind) =>
-                        <a href={'https://www.ncbi.nlm.nih.gov/pubmed/' + pmid} title={pmid} style={{paddingLeft: 5}} key={ind}>
+                        <a href={pmid} title={pmid} style={{paddingLeft: 5}} key={ind}>
                             <img src={icons['pmid']} width={25} />
                         </a>
                     )}

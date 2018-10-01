@@ -28,25 +28,25 @@
             For best app performance, please use a browser other than Internet Explorer.
         </div>
     </div>
-            <nav class="navbar navbar-light sticky-top bg-light justify-content-center navbar-expand-sm"
-                 id="g2n-navbar">
-                <a class="navbar-brand" href="/G2N">
-                    <img id="logo" src="static/logo.png" height="60px" class="d-inline-block full-logo">
-                </a>
-                <div id="scrollspy-nav" class="collapse navbar-collapse">
-                    <ul class="nav nav-pills">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#x2k-scroll">Submit</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#command-line">Command Line</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#datasets">Datasets</a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+    <nav class="navbar navbar-light sticky-top bg-light justify-content-center navbar-expand-sm"
+         id="g2n-navbar">
+        <a class="navbar-brand" href="/G2N">
+            <img id="logo" src="static/logo.png" height="60px" class="d-inline-block full-logo">
+        </a>
+        <div id="scrollspy-nav" class="collapse navbar-collapse">
+            <ul class="nav nav-pills">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#x2k-scroll">Submit</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#command-line">Command Line</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#datasets">Datasets</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
     <div class="row justify-content-center bg-light">
         <div class="col-sm-10">
         </div>
@@ -55,13 +55,10 @@
                 <h4>Submit</h4>
                 <div class="my-3">
                     <p id="x2k-desc" class="desc">
-                        Enter a list of differentially expressed genes to receive results for
-                        protein–protein interactions subnetwork that connects the enriched
-                        transcription factors with known protein-protein interactions using the <a
-                            href="https://www.ncbi.nlm.nih.gov/pubmed/17916244">Genes2Networks
-                        (G2N)</a> method. G2N generates protein-protein interaction network of input
-                        transcription factors
-                        connected with each other by using known protein-protein interactions.
+                        Enter a list of mammalian genes or proteins in Entrez gene symbol format to receive results of a
+                        protein-protein interactions (PPI) subnetwork that connects the enriched genes/proteins with
+                        known protein-protein interactions using Genes2Networks (G2N). G2N connects input list of
+                        genes/proteins using the shortest path algorithms using known PPI from the selected databases.
                     </p>
                 </div>
                 <form id="x2k-form" enctype="multipart/form-data" action="/G2N/results" method="POST">
@@ -372,14 +369,16 @@
             </div>
 
             <div id="command-line">
-                <h4>Command line tools</h4>
-                <p>You can download command line standalone versions of G2N in JAR format.
-                    <br/>Command near each download link suggests usage:</p>
-                <p>
-                <p>
-                    <a href=http://www.maayanlab.net/X2K/download/G2N-1.5-SNAPSHOT-jar-with-dependencies.jar>G2N (3.6
-                        MB)</a>
-                    <code>java -jar G2N.jar input output.sig [backgroundSigFiles...]</code>
+                <h4>Command line version</h4>
+
+                <p>From <a href=http://www.maayanlab.net/X2K/download/G2N-1.5-SNAPSHOT-jar-with-dependencies.jar>here</a> (JAR format, 3.6
+                    MB) you can download a command line standalone version of G2N.
+                    <br/>General format on how to run the G2N command line tool:
+                    <br/><code>java -jar [G2N JAR file] [input gene list] [output SIG file] [backgroundSigFile1, backgroundSigFile2, ...]</code>
+                </p>
+
+                <p>Example of how to run the G2N command line tool:
+                    <br/><code>java -jar G2N-1.5-SNAPSHOT-jar-with-dependencies.jar genelist.txt results.sig huMAP.sig Biocarta.sig</code>
                 </p>
             </div>
 
