@@ -26,4 +26,7 @@
 <!--Body-->
 <div class="px-5 bg-light">
     <%@ include file="/templates/dashboard.jsp" %>
+    <%@ include file="/templates/footer.jsp" %>
 </div>
+
+</body>

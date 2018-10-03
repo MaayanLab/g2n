@@ -1,7 +1,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<link rel="shortcut icon" href="static/favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="static/favicon.ico?v=1"/>
 
 <!-- bootstrap -->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>

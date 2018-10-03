@@ -28,6 +28,36 @@ function submitButtonListener(button, settings_form) {
     });
 }
 
+function inputListener() {
+        $('#genelist').val($('#genelist').val().trim().split(/[\s\n,]/).join('\n'));
+        var len = cleanArray($('#genelist').val().trim().split('\n')).length;
+
+        if (len === 0) {
+            $('#warning').text('');
+            $('#gene-count').text('');
+            $('#results_submit').prop("disabled", true);
+        }
+        else if (len > 0) {
+            $('#results_submit').prop("disabled", false);
+            if (len < 20) {
+                $('#warning').text('Warning! Inputting gene lists containing less than 20 genes may produce inaccurate results.');
+            }
+            else if (len > 3000) {
+                $('#warning').text('Warning! Inputting gene lists containing more than 3000 genes may produce inaccurate results.');
+            }
+            else {
+                $('#warning').text('');
+            }
+
+            var genes = " genes";
+            if (len.toString()[len.toString().length - 1] === "1") {
+                genes = " gene";
+            }
+
+            $('#gene-count').text(len + genes);
+        }
+}
+
 function cleanArray(actual) {
 	  var newArray = [];
 	  for (var i = 0; i < actual.length; i++) {
@@ -39,6 +69,9 @@ function cleanArray(actual) {
 	}
 
 $(document).ready(function () {
+    // In case you just went back from 'Results'
+    inputListener();
+
     submitButtonListener("results_submit", "#x2k-form");
     // Check for Internet Explorer
     $(document).ready(function() {
@@ -47,36 +80,8 @@ $(document).ready(function () {
         }
     });
 
-    // text area listener
-    $("#genelist").on("change keyup paste", function () {
-        $('#genelist').val($('#genelist').val().trim().split(/[\s\n,]/).join('\n'));
-        var len = cleanArray($('#genelist').val().trim().split('\n')).length;
-        
-        if (len === 0) {
-        	$('#warning').text('');
-        	$('#gene-count').text('');
-        	$('#results_submit').prop("disabled", true); 
-        } 
-        else if (len > 0) {
-        	$('#results_submit').prop("disabled", false);
-	        if (len < 20) {
-	            $('#warning').text('Warning! Inputting gene lists containing less than 20 genes may produce inaccurate results.');
-	        }
-	        else if (len > 3000) {
-	            $('#warning').text('Warning! Inputting gene lists containing more than 3000 genes may produce inaccurate results.');
-	        }
-	        else {
-	        	$('#warning').text('');
-	        }
-	
-	        var genes = " genes";
-	        if (len.toString()[len.toString().length - 1] === "1") {
-	            genes = " gene";
-	        }
-	        
-	        $('#gene-count').text(len + genes);
-        }
-    });
+    $("#genelist").on("change keyup paste", inputListener());
+
 
     $("body").tooltip({ selector: '[data-toggle=tooltip]' });
 });
