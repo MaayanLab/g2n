@@ -204,7 +204,7 @@
                                                         <input class="form-check-input"
                                                                type="checkbox"
                                                                name="enable_Biocarta"
-                                                               value="false">
+                                                               value=false>
                                                         Biocarta
                                                     </label>
                                                 </div>
@@ -213,7 +213,7 @@
                                                         <input class="form-check-input"
                                                                type="checkbox"
                                                                name="enable_BioGRID"
-                                                               value="true" checked>
+                                                               value=true checked>
                                                         BioGRID 2017
                                                     </label>
                                                 </div>
@@ -222,7 +222,7 @@
                                                         <input class="form-check-input"
                                                                type="checkbox"
                                                                name="enable_BioPlex"
-                                                               value="false">
+                                                               value=false>
                                                         BioPlex
                                                     </label>
                                                 </div>
@@ -231,7 +231,7 @@
                                                         <input class="form-check-input"
                                                                type="checkbox"
                                                                name="enable_DIP"
-                                                               value="false">
+                                                               value=false>
                                                         DIP 2017
                                                     </label>
                                                 </div>
@@ -240,7 +240,7 @@
                                                         <input class="form-check-input"
                                                                type="checkbox"
                                                                name="enable_huMAP"
-                                                               value="false">
+                                                               value=false>
                                                         huMAP 2017
                                                     </label>
                                                 </div>
@@ -249,7 +249,7 @@
                                                         <input class="form-check-input"
                                                                type="checkbox"
                                                                name="enable_InnateDB"
-                                                               value="false">
+                                                               value=false>
                                                         InnateDB 2017
                                                     </label>
                                                 </div>
@@ -258,7 +258,7 @@
                                                         <input class="form-check-input"
                                                                type="checkbox"
                                                                name="enable_IntAct"
-                                                               value="true" checked>
+                                                               value=true checked>
                                                         IntAct 2017
                                                     </label>
                                                 </div>
@@ -267,7 +267,7 @@
                                                         <input class="form-check-input"
                                                                type="checkbox"
                                                                name="enable_KEGG"
-                                                               value="false">
+                                                               value=false>
                                                         KEGG
                                                     </label>
                                                 </div>
@@ -276,7 +276,7 @@
                                                         <input class="form-check-input"
                                                                type="checkbox"
                                                                name="enable_MINT"
-                                                               value="true" checked>
+                                                               value=true checked>
                                                         MINT 2017
                                                     </label>
                                                 </div>
@@ -285,7 +285,7 @@
                                                         <input class="form-check-input"
                                                                type="checkbox"
                                                                name="enable_ppid"
-                                                               value="true" checked>
+                                                               value=true checked>
                                                         ppid
                                                     </label>
                                                 </div>
@@ -294,7 +294,7 @@
                                                         <input class="form-check-input"
                                                                type="checkbox"
                                                                name="enable_SNAVI"
-                                                               value="false">
+                                                               value=false>
                                                         SNAVI 2017
                                                     </label>
                                                 </div>
@@ -303,7 +303,7 @@
                                                         <input class="form-check-input"
                                                                type="checkbox"
                                                                name="enable_iREF"
-                                                               value="false">
+                                                               value=false>
                                                         iREF 2017
                                                     </label>
                                                 </div>
@@ -313,7 +313,7 @@
                                                                 type="checkbox"
                                                                 class="form-check-input"
                                                                 name="enable_Stelzl"
-                                                                value="true" checked>
+                                                                value=true checked>
                                                         Stelzl
                                                     </label>
                                                 </div>
@@ -323,7 +323,7 @@
                                                                 type="checkbox"
                                                                 class="form-check-input"
                                                                 name="enable_vidal"
-                                                                value="false">
+                                                                value=false>
                                                         Vidal
                                                     </label>
                                                 </div>
@@ -333,7 +333,7 @@
                                                                 type="checkbox"
                                                                 class="form-check-input"
                                                                 name="enable_BIND"
-                                                                value="false">
+                                                                value=false>
                                                         BIND
                                                     </label>
                                                 </div>
@@ -343,7 +343,7 @@
                                                                 type="checkbox"
                                                                 class="form-check-input"
                                                                 name="enable_figeys"
-                                                                value="false">
+                                                                value=false>
                                                         figeys
                                                     </label>
                                                 </div>
@@ -353,7 +353,7 @@
                                                                 type="checkbox"
                                                                 class="form-check-input"
                                                                 name="enable_HPRD"
-                                                                value="false">
+                                                                value=false>
                                                         HPRD
                                                     </label>
                                                 </div>
@@ -366,6 +366,18 @@
                         </div>
                     </div>
                 </form>
+            </div>
+
+            <div id="api">
+                <h4>API</h4>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div style="overflow-y: auto; width: 100%;">
+                            <iframe src="https://nbviewer.jupyter.org/github/MaayanLab/g2n/blob/master/src/main/webapp/notebooks/g2n_api_notebook.ipynb?flush_cache=true"
+                                    style="border: 1px solid lightgrey; width: 100%; border-radius: 3px; margin-top: 5px; height: 500px;"></iframe>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div id="command-line">

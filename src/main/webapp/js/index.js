@@ -72,6 +72,7 @@ $(document).ready(function () {
     // In case you just went back from 'Results'
     inputListener();
 
+    $('.form-check-input').change(function(){$(this).val($(this).prop('checked'));});
     submitButtonListener("results_submit", "#x2k-form");
     // Check for Internet Explorer
     $(document).ready(function() {
