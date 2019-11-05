@@ -60,6 +60,7 @@ public class ResultsServlet extends HttpServlet {
         json.add("G2N", G2N_json.toString());
 
         json.add("input", textGenes);
+        resp.setHeader("Access-Control-Allow-Origin", "*");
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
         req.setAttribute("json", json);
