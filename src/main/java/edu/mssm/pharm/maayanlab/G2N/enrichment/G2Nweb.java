@@ -15,8 +15,6 @@ public class G2Nweb implements SettingsChanger {
 
     private final static String MAXIMUM_PATH_LENGTH = "max_path_length";
     private final static String MINIMUM_NETWORK_SIZE = "min_network_size";
-    private final static String NUMBER_OF_TOP_TFS = "number of top TFs";
-    private final static String NUMBER_OF_TOP_KINASES = "number of top kinases";
     private final static String ENABLE_YED_OUTPUT = "output results in yEd";
     private final static String ENABLE_CYTOSCAPE_OUTPUT = "output results in Cytoscape";
     private final static String ENABLE_PAJEK_OUTPUT = "output results in Pajek";
@@ -30,10 +28,6 @@ public class G2Nweb implements SettingsChanger {
             set(G2Nweb.MINIMUM_NETWORK_SIZE, 50);
             // Integer: minimum path length [>0]
             set(G2Nweb.MAXIMUM_PATH_LENGTH, 4);
-            // Integer: number of transcription factors used in network expansion and drug discovery. [>0]
-            set(G2Nweb.NUMBER_OF_TOP_TFS, 10);
-            // Integer: number of kinases used in drug discovery. [>0]
-            set(G2Nweb.NUMBER_OF_TOP_KINASES, 10);
             // Boolean: output a yEd graphml file for network visualization. [true/false]
             set(G2Nweb.ENABLE_YED_OUTPUT, true);
             // Boolean: output a Cytoscape XGMML file for network visualization. [true/false]
