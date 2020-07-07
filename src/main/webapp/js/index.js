@@ -71,18 +71,10 @@ function inputListener() {
     });
 }
 
-function cleanArray(actual) {
-    var newArray = [];
-    for (var i = 0; i < actual.length; i++) {
-        if (actual[i]) {
-            newArray.push(actual[i]);
-        }
-    }
-    return newArray;
-}
-
 $(document).ready(function () {
     // In case you just went back from 'Results'
+    $("#blocker").hide();
+    $("#loader").hide()
     inputListener();
 
     $('.form-check-input').change(function () {
@@ -90,14 +82,8 @@ $(document).ready(function () {
     });
     submitButtonListener("results_submit", "#x2k-form");
     // Check for Internet Explorer
-    $(document).ready(function () {
-        if ((!!window.MSInputMethodContext && !!document.documentMode) || navigator.userAgent.indexOf("MSIE") != -1) {
-            $('.show-on-ie').show();
-        }
-    });
-
-    $("#genelist").on("change keyup paste", inputListener());
-
-
+    if ((!!window.MSInputMethodContext && !!document.documentMode) || navigator.userAgent.indexOf("MSIE") != -1) {
+        $('.show-on-ie').show();
+    }
     $("body").tooltip({selector: '[data-toggle=tooltip]'});
 });

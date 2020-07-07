@@ -8,6 +8,7 @@ import com.google.gson.annotations.Expose;
 import edu.mssm.pharm.maayanlab.Genes2Networks.NetworkNode;
 
 import java.lang.reflect.Type;
+import java.lang.NullPointerException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -32,9 +33,15 @@ public class Network {
     }
 
     public void addInteraction(String node1, String node2) {
-        int loc1 = nodeLocation.get(node1);
-        int loc2 = nodeLocation.get(node2);
-        interactions.add(new Interaction(loc1, loc2));
+        try {
+            int loc1 = nodeLocation.get(node1);
+            int loc2 = nodeLocation.get(node2);
+            interactions.add(new Interaction(loc1, loc2));
+        }
+        catch (NullPointerException ignored)
+        {
+            System.out.println("Some nodes are missing");
+        }
     }
 
     public boolean contains(String s) {
