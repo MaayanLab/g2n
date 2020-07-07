@@ -39,6 +39,9 @@
                     <a class="nav-link active" href="#x2k-scroll">Submit</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="#api">API</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="#command-line">Command Line</a>
                 </li>
                 <li class="nav-item">

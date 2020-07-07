@@ -24,6 +24,8 @@ function submitButtonListener(button, settings_form) {
 
         if (text_input.length > 0) {
             $form.submit();
+            $("#blocker").hide();
+            $("#loader").hide();
         }
     });
 }
@@ -73,8 +75,6 @@ function inputListener() {
 
 $(document).ready(function () {
     // In case you just went back from 'Results'
-    $("#blocker").hide();
-    $("#loader").hide()
     inputListener();
 
     $('.form-check-input').change(function () {
