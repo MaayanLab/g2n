@@ -1,38 +1,35 @@
 {
-  "name": "x2k-webapp",
-  "version": "1.0.0",
+  "name": "g2n-webapp",
+  "version": "2.2.0",
   "description": "",
   "main": "gruntfile.js",
+  "private": true,
   "scripts": {
     "build": "grunt build",
-    "build-tables": "resources/json_to_tables.jsx templates/downloads.jsp resources/*.tsv"
+    "build-tables": "babel-node resources/json_to_tables.jsx templates/downloads.jsp resources/*.tsv"
   },
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "save-svg-as-png": "^1.4.0"
+    "save-svg-as-png": "^1.4.17"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-plugin-replace-require": "0.0.4",
-    "babel-plugin-transform-react-jsx": "^6.24.1",
-    "babel-plugin-transform-remove-strict-mode": "0.0.2",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "babelify": "^8.0.0",
-    "browserify": "^16.1.1",
-    "grunt": "^1.0.2",
-    "grunt-browserify": "^5.3.0",
+    "@babel/core": "^7.28.0",
+    "@babel/node": "^7.28.0",
+    "@babel/preset-env": "^7.28.0",
+    "@babel/preset-react": "^7.27.1",
+    "babelify": "^10.0.0",
+    "browserify": "^17.0.1",
+    "grunt": "^1.6.1",
+    "grunt-browserify": "^6.0.0",
     "grunt-changed": "^2.0.1",
-    "grunt-cli": "^1.2.0",
+    "grunt-cli": "^1.5.0",
     "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-less": "^1.4.1",
-    "less": "^3.0.1",
-    "npm": "^6.0.1",
+    "grunt-contrib-less": "^3.0.0",
+    "less": "^4.3.0",
     "pretty": "^2.0.0",
-    "react": "^16.3.2",
-    "react-dom": "^16.3.2",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
     "windowify": "^0.3.0"
   }
 }

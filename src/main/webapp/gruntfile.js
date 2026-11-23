@@ -6,7 +6,7 @@ module.exports = function(grunt) {
                     transform: [
                         ['babelify', {
                             sourceMap: true,
-                            presets: ['env'],
+                            presets: ['@babel/preset-env'],
                         }],
                         'windowify',
                     ]

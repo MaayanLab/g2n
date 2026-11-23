@@ -11,18 +11,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import edu.mssm.pharm.maayanlab.G2N.enrichment.Network;
 import edu.mssm.pharm.maayanlab.common.web.JSONify;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
-import java.util.Set;
 
 @WebListener
 public class Context implements ServletContextListener {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Context.class);
     private static Gson gson;
 
     public static JSONify getJSONConverter() {
@@ -42,20 +38,7 @@ public class Context implements ServletContextListener {
         Context.gson = gsonBuilder.create();
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public void contextDestroyed(ServletContextEvent event) {
-//		HibernateUtil.getSessionFactory().close(); // Free all resources
-
-        //TODO: find memory leak that requires server to be restarted after hot deploying several (3?) times
-        Set<Thread> threadSet = Thread.getAllStackTraces().keySet();
-        for (Thread t : threadSet) {
-            if (t.getName().contains("Abandoned connection cleanup thread")) {
-                synchronized (t) {
-                    LOGGER.warn("Forcibly stopping thread to avoid memory leak: " + t.getName());
-                    t.stop();    //don't complain, it works
-                }
-            }
-        }
     }
 }

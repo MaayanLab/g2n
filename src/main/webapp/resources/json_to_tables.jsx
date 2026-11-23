@@ -1,4 +1,4 @@
-#!/usr/bin/env babel-node --presets env
+#!/usr/bin/env babel-node
 
 import * as React from 'react'
 import * as ReactDOMServer from 'react-dom/server'

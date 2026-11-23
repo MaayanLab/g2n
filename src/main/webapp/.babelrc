@@ -1,17 +1,11 @@
 {
+    "sourceType": "script",
     "presets": [
-        ["env", {
-            "targets": {
-                "browsers": ["> 5%", "ie >= 11"]
-            },
+        ["@babel/preset-env", {
+            "targets": "defaults",
             "modules": false,
-            "useBuiltIns": true,
             "loose": true
-        }]
-    ],
-    "plugins": [
-        "transform-remove-strict-mode",
-        "transform-react-jsx",
-        "transform-runtime"
+        }],
+        "@babel/preset-react"
     ]
 }
